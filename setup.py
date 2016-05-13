@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 setup(
-    name='listings',
-    url='https://github.com/fgregg/listings_scraper',
+    name='craigslistings',
+    url='https://github.com/fgregg/craigslistings',
     version='0.0.1',
     description='Craigslist rental housing listings scraper',
-    packages=['listings'],
+    packages=['craigslistings'],
     install_requires=['psycopg2', 'raven'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
