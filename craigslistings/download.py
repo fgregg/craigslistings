@@ -1,4 +1,4 @@
-import urllib.request
+import requests
 import logging
 
 def save_rss(feed, city, cursor):        
@@ -9,7 +9,7 @@ def save_rss(feed, city, cursor):
     logging.info('%s', section)
     logging.info('%s', url)
 
-    listing = urllib.request.urlopen(url, timeout=60).read()
+    listing = requests.get(url).text
 
     cursor.execute("""INSERT INTO rss (section, url, raw, city) """
                    """VALUES (%s, %s, %s, %s) """
@@ -44,7 +44,7 @@ if __name__ == '__main__':
         for feed in feeds:
             try:
                 save_rss(feed, city, c)
-            except urllib.error.HTTPError as e:
+            except requests.HTTPError as e:
                 logging.info(e)
                 logging.info(url)
             except:
