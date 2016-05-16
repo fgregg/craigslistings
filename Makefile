@@ -1,4 +1,5 @@
 include config.mk
+PG_DB=neighborhood
 
 define check_relation
  psql -d $(PG_DB) -c "\d $@" > /dev/null 2>&1 ||
@@ -15,7 +16,7 @@ rss:
                                   processed BOOLEAN DEFAULT FALSE)"
 
 listing:
-	$(check_relation) psql -d $(PG_db) -c \
+	$(check_relation) psql -d $(PG_DB) -c \
 		"CREATE TABLE $@ (url TEXT, html TEXT)"
 
 ocd_ctrl_socket :
