@@ -10,14 +10,15 @@ rss:
 		"CREATE TABLE $@ (rss_id SERIAL PRIMARY KEY, \
 				  section TEXT, \
 				  url TEXT, \
-				  added TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
+				  added TIMESTAMP WITH TIMEZONE DEFAULT CURRENT_TIMESTAMP, \
 				  raw TEXT, \
-				  city TEXT, \
-                                  processed BOOLEAN DEFAULT FALSE)"
+				  city TEXT)"
 
 listing:
 	$(check_relation) psql -d $(PG_DB) -c \
-		"CREATE TABLE $@ (url TEXT, html TEXT)"
+		"CREATE TABLE $@ (url TEXT, \
+                                  html TEXT \
+                                  updated TIMESTAMP WITH TIMEZONE)"
 
 ocd_ctrl_socket :
 	ssh -M -S $@ -fnNT -L $(PG_PORT):$(PG_HOST):5432 ubuntu@ocd.datamade.us
