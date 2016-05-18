@@ -19,7 +19,7 @@ if __name__ == '__main__':
     c = con.cursor()
 
     while True:
-        c.execute("SELECT rss_id, raw FROM rss WHERE processed = False")
+        c.execute("SELECT rss_id, raw FROM rss")
         for rss_id, rss in c.fetchall():
             feed = feedparser.parse(rss)
             logging.info("rss id: %s", rss_id)
@@ -54,7 +54,7 @@ if __name__ == '__main__':
                         
                         
 
-            c.execute("UPDATE rss SET processed = True WHERE rss_id = %s",
+            c.execute("DELETE from rss WHERE rss_id = %s",
                       (rss_id, ))
             con.commit()
         logging.info('waiting')
