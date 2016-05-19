@@ -18,7 +18,9 @@ listing:
 	$(check_relation) psql -d $(PG_DB) -c \
 		"CREATE TABLE $@ (url TEXT, \
                                   html TEXT \
-                                  updated TIMESTAMP WITH TIMEZONE)"
+                                  updated TIMESTAMP WITH TIMEZONE, \
+                                  city TEXT, \
+                                  section TEXT)"
 
 ocd_ctrl_socket :
 	ssh -M -S $@ -fnNT -L $(PG_PORT):$(PG_HOST):5432 ubuntu@ocd.datamade.us

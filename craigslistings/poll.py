@@ -19,8 +19,8 @@ if __name__ == '__main__':
     c = con.cursor()
 
     while True:
-        c.execute("SELECT rss_id, raw FROM rss")
-        for rss_id, rss in c.fetchall():
+        c.execute("SELECT rss_id, raw, city, section FROM rss")
+        for rss_id, rss, city, section in c:
             feed = feedparser.parse(rss)
             logging.info("rss id: %s", rss_id)
             for entry in feed.entries :
@@ -29,8 +29,8 @@ if __name__ == '__main__':
                 if c.fetchone() is None:
                     try:
                         result = requests.get(entry.id, timeout=60)
-                        c.execute("INSERT INTO listing VALUES (%s, %s, %s)",
-                                  (entry.id, result.text, entry.updated))
+                        c.execute("INSERT INTO listing VALUES (%s, %s, %s, %s, %s)",
+                                  (entry.id, result.text, entry.updated, city, section))
                     except:
                         client.captureException()
                         raise
